@@ -1,0 +1,215 @@
+{
+    "netflow_orbit": {
+        "pmacct": {
+            "SRC_AS": "src_bgp_as",
+            "DST_AS": "dest_bgp_as",
+            "PEER_SRC_IP": "dvc_ip",
+            "PEER_DST_IP": "bgp_next_hop_router",
+            "IN_IFACE": "in_int",
+            "OUT_IFACE": "out_int",
+            "SRC_IP": "src_ip",
+            "DST_IP": "dest_ip",
+            "SRC_MASK": "src_mask",
+            "DST_MASK": "dest_mask",
+            "SRC_PORT": "src_port",
+            "DST_PORT": "dest_port",
+            "TCP_FLAGS": "tcp_flags",
+            "PROTOCOL": "protocol",
+            "TOS": "src_tos",
+            "TIMESTAMP_MIN": "start_time",
+            "TIMESTAMP_MAX": "end_time",
+            "flow_dir": "flow_dir",
+            "fwd_status": "fwd_status",
+            "SAMPLING_RATE": "sampling_rate",
+            "PACKETS": "input_pkt",
+            "FLOWS": "flows",
+            "BYTES": "bytes"
+        },
+        "enrichment": {
+            "dvc_ip-isp-raw": {
+                "filename": "dvc_ip-isp-raw.csv",
+                "lookup_type": "left_join",
+                "rename_fields": {
+                    "snmpid": "isp_int"
+                },
+                "match_fields": [
+                    "dvc_ip",
+                    "isp_int"
+                ],
+                "include_fields": [
+                    "interface",
+                    "interface_desc",
+                    "isp",
+                    "isp_interface"
+                ]
+            },
+            "product_ips": {
+                "filename": "product_ips.csv",
+                "lookup_type": "left_join",
+                "rename_fields": {},
+                "match_fields": [
+                    "product_ip"
+                ],
+                "include_fields": [
+                    "product_name",
+                    "BU",
+                    "dns_name",
+                    "subservice"
+                ]
+            },
+            "dvc_orbit": {
+                "filename": "dvc_orbit.csv",
+                "lookup_type": "left_join",
+                "rename_fields": {},
+                "match_fields": [
+                    "dvc_ip"
+                ],
+                "include_fields": [
+                    "dvc_name",
+                    "orbit",
+                    "netflow_sample_rate"
+                ]
+            },
+            "tcp_flags": {
+                "filename": "tcp_flags.csv",
+                "lookup_type": "left_join",
+                "rename_fields": {},
+                "match_fields": [
+                    "tcp_flags"
+                ],
+                "include_fields": [
+                    "tcp_flags_str"
+                ]
+            },
+            "orbit_prefixes": {
+                "filename": "orbit_prefixes.csv",
+                "lookup_type": "cidr",
+                "rename_fields": {
+                    "cidr_range": "prefix"
+                },
+                "match_fields": [
+                    "client_ip"
+                ],
+                "include_fields": [
+                    "prefix"
+                ]
+            },
+            "prefix_asn_1": {
+                "filename": "prefix_asn.csv",
+                "lookup_type": "cidr",
+                "rename_fields": {
+                    "prefix": "client_bgp_prefix",
+                    "asn": "client_asn"
+                },
+                "match_fields": [
+                    "client_ip"
+                ],
+                "include_fields": [
+                    "client_bgp_prefix",
+                    "client_asn"
+                ]
+            },
+            "prefix_asn_2": {
+                "filename": "prefix_asn.csv",
+                "lookup_type": "cidr",
+                "rename_fields": {
+                    "prefix": "product_bgp_prefix",
+                    "asn": "product_asn"
+                },
+                "match_fields": [
+                    "product_ip"
+                ],
+                "include_fields": [
+                    "product_bgp_prefix",
+                    "product_asn"
+                ]
+            },
+            "prefix_asn_3": {
+                "filename": "prefix_asn.csv",
+                "lookup_type": "cidr",
+                "rename_fields": {
+                    "prefix": "src_bgp_prefix",
+                    "asn": "src_asn"
+                },
+                "match_fields": [
+                    "src_ip"
+                ],
+                "include_fields": [
+                    "src_bgp_prefix",
+                    "src_asn"
+                ]
+            },
+            "prefix_asn_4": {
+                "filename": "prefix_asn.csv",
+                "lookup_type": "cidr",
+                "rename_fields": {
+                    "prefix": "dest_bgp_prefix",
+                    "asn": "dest_asn"
+                },
+                "match_fields": [
+                    "dest_ip"
+                ],
+                "include_fields": [
+                    "dest_bgp_prefix",
+                    "dest_asn"
+                ]
+            },
+            "asn_org_1": {
+                "filename": "asn_org.csv",
+                "lookup_type": "left_join",
+                "rename_fields": {
+                    "asn": "client_asn",
+                    "org": "client_org"
+                },
+                "match_fields": [
+                    "client_asn"
+                ],
+                "include_fields": [
+                    "client_org"
+                ]
+            },
+            "asn_org_2": {
+                "filename": "asn_org.csv",
+                "lookup_type": "left_join",
+                "rename_fields": {
+                    "asn": "product_asn",
+                    "org": "product_org"
+                },
+                "match_fields": [
+                    "product_asn"
+                ],
+                "include_fields": [
+                    "product_org"
+                ]
+            },
+            "asn_org_3": {
+                "filename": "asn_org.csv",
+                "lookup_type": "left_join",
+                "rename_fields": {
+                    "asn": "src_asn",
+                    "org": "src_org"
+                },
+                "match_fields": [
+                    "src_asn"
+                ],
+                "include_fields": [
+                    "src_org"
+                ]
+            },
+            "asn_org_4": {
+                "filename": "asn_org.csv",
+                "lookup_type": "left_join",
+                "rename_fields": {
+                    "asn": "dest_asn",
+                    "org": "dest_org"
+                },
+                "match_fields": [
+                    "dest_asn"
+                ],
+                "include_fields": [
+                    "dest_org"
+                ]
+            }
+        }
+    }
+}
