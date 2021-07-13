@@ -16,3 +16,5 @@ Run generate-report.py
 Developed with Python 3.8.2
 
 Contains Python code to enrich default netflow csv files produced by pmacct with custom data
+
+Run enrich-netflow.py
