@@ -1,0 +1,17 @@
+create table netflow_data 
+(
+	StartTime datetime property (MINMAX_CACHE_SIZE=2097152),
+	Dur double,
+    Protocol varchar(7),
+	SAddr ipv4,
+	Sport integer,
+	DAddr ipv4,
+	Dport integer,
+	State Varchar(15),
+	sTos int,
+	dTos int,
+	TotPkts int,
+	TotBytes int,
+	SrcBytes int
+);
+
